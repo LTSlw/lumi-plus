@@ -27,7 +27,7 @@ int _tmain(int argc, wchar_t* argv[])
 	}
 	if (argc < 4)
 	{
-		wcout << L"参数不足！\n\n" << HelpWord;
+		wcout << L"参数错误！\n\n" << HelpWord;
 		return 0;
 	}
 	else if (argc > 4)
@@ -73,7 +73,8 @@ namespace base64
 		{
 			++nByte; //++nByte %= 3;
 			nByte %= 3;
-			Byte[nByte] = fIn.get();
+			//三种等价
+			fIn.read((char*)&Byte[nByte], sizeof(uint8_t));//Byte[nByte] = fIn.get(); //char temp = 0;fIn.read(&temp, sizeof(temp));Byte[nByte] = temp;
 			if (!fIn)
 				break;
 			if (nByte == 2)
@@ -104,6 +105,45 @@ namespace base64
 
 	bool decode(const wstring& fInPath, const wstring& fOutPath)
 	{
-		return 0;
+		ifstream fIn;
+		fIn.open(fInPath);
+		if (!fIn)
+			return 0;
+		ofstream fOut;
+		fOut.open(fOutPath, ios::binary);
+		if (!fOut)
+		{
+			fIn.close();
+			return 0;
+		}
+		char Byte[4]{};
+		while (true)
+		{
+			fIn >> Byte[0] >> Byte[1] >> Byte[2] >> Byte[3];
+			if (!fIn)
+				break;
+			if (Byte[2] == '=')
+			{
+				uint8_t temp = DecodeDic[Byte[0]] << 2 | DecodeDic[Byte[1]] >> 4;
+				fOut.write((char*)&temp, sizeof(uint8_t));
+			}
+			else if (Byte[3] == '=')
+			{
+				uint8_t temp = DecodeDic[Byte[0]] << 2 | DecodeDic[Byte[1]] >> 4;
+				fOut.write((char*)&temp, sizeof(uint8_t));
+				temp = (DecodeDic[Byte[1]] << 4 | DecodeDic[Byte[2]] >> 2) & 0xff;
+				fOut.write((char*)&temp, sizeof(uint8_t));
+			}
+			else
+			{
+				uint8_t temp = DecodeDic[Byte[0]] << 2 | DecodeDic[Byte[1]] >> 4;
+				fOut.write((char*)&temp, sizeof(uint8_t));
+				temp = (DecodeDic[Byte[1]] << 4 | DecodeDic[Byte[2]] >> 2) & 0xff;
+				fOut.write((char*)&temp, sizeof(uint8_t));
+				temp = (DecodeDic[Byte[2]] << 6 | DecodeDic[Byte[3]]) & 0xff;
+				fOut.write((char*)&temp, sizeof(uint8_t));
+			}
+		}
+		return 1;
 	}
 }
