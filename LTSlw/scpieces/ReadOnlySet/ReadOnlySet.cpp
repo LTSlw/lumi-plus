@@ -1,4 +1,14 @@
-﻿#include <iostream>
+﻿/*
+ReadOnlySet.cpp
+作用：为指定文件（夹）赋予只读属性
+输入：argv[1] - 文件（夹）路径
+Docs:
+	GetFileAttributesW:https://docs.microsoft.com/en-us/windows/win32/api/fileapi/nf-fileapi-getfileattributesw
+	SetFileAttributesW:https://docs.microsoft.com/en-us/windows/win32/api/fileapi/nf-fileapi-setfileattributesw
+	File Attribute Constants:https://docs.microsoft.com/en-us/windows/win32/fileio/file-attribute-constants
+*/
+
+#include <iostream>
 #include <locale>
 #include <Windows.h>
 #include <tchar.h>
