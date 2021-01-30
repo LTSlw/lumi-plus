@@ -1,0 +1,60 @@
+div.lp-float-bar{
+    position:fixed;
+    display:block;
+    right:0px;
+    top:50px;
+    width:40px;
+    height:40px;
+    background-color:rgba(0,0,0,0.5);
+    color:white;
+    border-style:solid;
+    border-color:grey;
+    border-width:2px;
+    border-radius:5px;
+    z-index:1;
+}
+div.lp-home{
+    position:fixed;
+    display:none;
+    right:0px;
+    top:50px;
+    width:309px;
+    height:500px;
+    background-color:rgba(0,0,0,0.5);
+    color:white;
+    border-radius:25px;
+    border-top-right-radius:5px;
+    border-bottom-right-radius:5px;
+    user-select:none;
+    overflow:hidden;
+    z-index:1;
+}
+div.lp-home div.lp-home-head{
+    height:60px;
+    overflow:hidden;
+}
+div.lp-home div.lp-home-head p.lp-home-title{
+    position:absolute;
+    top:10px;
+    left:20px;
+    margin:0px;
+    font-size:38px;
+    font-weight:bold;
+}
+div.lp-home svg.lp-home-back{
+    position:absolute;
+    top:0px;
+    right:0px;
+}
+div.lp-home div.divider{
+    background-color:rgba(200,200,200,0.5);
+}
+div.lp-home div.lp-home-body{
+    overflow:hidden;
+    height:360px;
+}
+div.lp-home div.lp-home-bottom{
+    overflow:hidden;
+    height:45px;
+    margin-bottom:5px;
+}
